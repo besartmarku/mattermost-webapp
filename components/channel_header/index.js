@@ -13,7 +13,7 @@ import {getCustomEmojisInText} from 'mattermost-redux/actions/emojis';
 import {General} from 'mattermost-redux/constants';
 import {
     getCurrentChannel,
-    getMyCurrentChannelMembership,
+    getMyChannelMember,
     isCurrentChannelFavorite,
     isCurrentChannelMuted,
     isCurrentChannelReadOnly,
@@ -49,6 +49,7 @@ function makeMapStateToProps() {
         const channel = getCurrentChannel(state) || {};
         const user = getCurrentUser(state);
 
+<<<<<<< HEAD
         let dmUser;
         let gmMembers;
         if (channel && channel.type === General.DM_CHANNEL) {
@@ -73,6 +74,20 @@ function makeMapStateToProps() {
             isQuickSwitcherOpen: isModalOpen(state, ModalIdentifiers.QUICK_SWITCH),
             hasGuests: stats.guest_count > 0,
         };
+=======
+    return {
+        teamId: getCurrentTeamId(state),
+        channel,
+        channelMember: getMyChannelMember(state, channel.id),
+        currentUser: user,
+        dmUser,
+        rhsState: getRhsState(state),
+        isFavorite: isCurrentChannelFavorite(state),
+        isReadOnly: isCurrentChannelReadOnly(state),
+        isMuted: isCurrentChannelMuted(state),
+        isQuickSwitcherOpen: isModalOpen(state, ModalIdentifiers.QUICK_SWITCH),
+        hasGuests: stats.guest_count > 0,
+>>>>>>> c5cd9909ff88b506450f178fba3d245fea6ab24d
     };
 }
 

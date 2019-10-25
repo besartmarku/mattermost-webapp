@@ -78,6 +78,30 @@ export default class PluginRegistry {
         return dispatchPluginComponentAction('LeftSidebarHeader', this.id, component);
     }
 
+    // Register a in the list of apps.
+    // Accepts a React component. Returns a unique identifier.
+    registerTeamAppComponent(component, show = () => true) {
+        const id = generateId();
+        store.dispatch({
+            type: ActionTypes.RECEIVED_PLUGIN_COMPONENT,
+            name: 'TeamApp',
+            data: {
+                id,
+                pluginId: this.id,
+                component,
+                show,
+            },
+        });
+
+        return id;
+    }
+
+    // Register in the app visualization in the center panel.
+    // Accepts an id for the url and a React component. Returns a unique identifier.
+    registerAppCenterComponent(id, component) {
+        return dispatchPluginComponentAction('App.' + id, this.id, component);
+    }
+
     // Register a component fixed to the bottom of the team sidebar. Does not render if
     // user is only on one team and the team sidebar is not shown.
     // Accepts a React component. Returns a unique identifier.
@@ -104,7 +128,7 @@ export default class PluginRegistry {
     // - action - a function called when the button is clicked, passed the channel and channel member as arguments
     // - dropdown_text - string or React element shown for the dropdown button description
     // - tooltip_text - string shown for tooltip appear on hover
-    registerChannelHeaderButtonAction(icon, action, dropdownText, tooltipText) {
+    registerChannelHeaderButtonAction(icon, action, dropdownText, tooltipText, show = () => true, active = () => false) {
         const id = generateId();
 
         const data = {
@@ -114,6 +138,8 @@ export default class PluginRegistry {
             action,
             dropdownText: resolveReactElement(dropdownText),
             tooltipText,
+            show,
+            active,
         };
 
         store.dispatch({

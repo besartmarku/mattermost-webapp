@@ -7,7 +7,12 @@ import {Client4} from 'mattermost-redux/client';
 
 import store from 'stores/redux_store.jsx';
 import {ActionTypes} from 'utils/constants.jsx';
+<<<<<<< HEAD
 import {getSiteURL} from 'utils/url';
+=======
+import {browserHistory} from 'utils/browser_history.jsx';
+import {getSiteURL} from 'utils/url.jsx';
+>>>>>>> c5cd9909ff88b506450f178fba3d245fea6ab24d
 import PluginRegistry from 'plugins/registry';
 import {unregisterAllPluginWebSocketEvents, unregisterPluginReconnectHandler} from 'actions/websocket_actions.jsx';
 import {unregisterPluginTranslationsSource} from 'actions/views/root';
@@ -125,7 +130,7 @@ function initializePlugin(manifest) {
     const plugin = window.plugins[manifest.id];
     const registry = new PluginRegistry(manifest.id);
     if (plugin && plugin.initialize) {
-        plugin.initialize(registry, store);
+        plugin.initialize(registry, store, browserHistory);
     }
 }
 
